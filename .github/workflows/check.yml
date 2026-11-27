@@ -1,11 +1,11 @@
 name: VPN Gate Node Check
 
-# 定时任务：每 30 分钟检测一次。
+# 定时任务：每 8 小时检测一次（UTC 0/8/16 点，对应北京时间 8/16/0 点）。
 # 注意：GitHub 调度最小间隔约 5 分钟，但通常会延迟几分钟；仓库连续 60 天无提交会让定时任务自动停用。
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '0 */8 * * *'
   workflow_dispatch:
     inputs:
       max_nodes:
