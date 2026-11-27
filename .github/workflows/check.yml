@@ -6,10 +6,6 @@ name: VPN Gate Node Check
 on:
   schedule:
     - cron: '0 */8 * * *'
-  # 本地保活脚本每 8 小时推送 keepalive.txt，既保持仓库活跃又触发检测
-  push:
-    paths:
-      - 'keepalive.txt'
   workflow_dispatch:
     inputs:
       max_nodes:
