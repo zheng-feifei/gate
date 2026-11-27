@@ -22,6 +22,9 @@ on:
         description: '单节点检测超时（秒）'
         required: false
         default: '25'
+  push:
+    paths:
+      - '.github/workflows/check.yml'
 
 permissions:
   contents: read
@@ -54,7 +57,7 @@ jobs:
 
       - name: Validate worker secret
         env:
-          DOMAIN: ${{ secrets.DOMAIN }}
+          DOMAIN: ${{ secrets.DOMAIN || 'test.pfeifei.cc.cd' }}
         run: |
           if [ -z "${DOMAIN}" ]; then
             echo "::error::未配置检测地址。请在仓库 Settings → Secrets and variables → Actions 中新增 Secret：DOMAIN（只填 Worker 的 host，例如 abc.workers.dev）"
@@ -64,7 +67,7 @@ jobs:
 
       - name: Run pipeline
         env:
-          CHECK_WORKER: "https://${{ secrets.DOMAIN }}/check?sstp=vpn:vpn@"
+          CHECK_WORKER: "https://${{ secrets.DOMAIN || 'test.pfeifei.cc.cd' }}/check?sstp=vpn:vpn@"
           CHECK_CONCURRENCY: ${{ github.event.inputs.concurrency || '32' }}
           CHECK_TIMEOUT: ${{ github.event.inputs.timeout || '25' }}
           MAX_CHECK_NODES: ${{ github.event.inputs.max_nodes || '0' }}
